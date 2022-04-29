@@ -2,7 +2,6 @@ var PersonModel = require('./models').PersonModel;
 var CommentModel = require('./models').CommentModel;
 
 var appRouter = function (app) {
-
     app.get('/person', function (req, res) {
         PersonModel.getAll(function (error, result) {
             if (error) {
@@ -53,8 +52,6 @@ var appRouter = function (app) {
             });
         });
     });
-
-
 }
 
 module.exports = appRouter;

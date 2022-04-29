@@ -32,7 +32,7 @@ ProductDetail.create = function (data, callback) {
         quantity: data.quantity,
         price: data.price,
         type: data.type,
-        timestamp: (new Date())
+        timestamp: new Date()
     }
     var id = uuid.v4();
     bucket.insert(id, product, function (error, result) {

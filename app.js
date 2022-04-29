@@ -6,7 +6,6 @@ var serverKey = "AAAALN0pKyQ:APA91bEgbmmi4_A9wvhpV0OwgNrzwx0lwSkKD7THTyZ-gmS8GBv
 var fcm = new FCM(serverKey);
 var fs = require('fs');
 
-
 var obj = {
     tokens: []
 };
@@ -34,7 +33,6 @@ var bucket = cluster.openBucket('product', function (err) {
         console.log('Bucket connection failed', err);
         return;
     }
-    console.log(bucket._name)
     console.log('Connected to Couchbase!');
 });
 module.exports.bucket = bucket;
@@ -50,7 +48,6 @@ app.post("/notify", (request, response) => {
                     console.log(err);
                 } else {
                     obj = JSON.parse(data);
-                    console.log(obj);
                     for (var i = 0; i < obj.tokens.length; i++) {
                         sendNotification(i, response, obj.tokens[i]);
                     }
@@ -60,11 +57,7 @@ app.post("/notify", (request, response) => {
     });
 });
 
-
-
 function sendNotification(_i, response, _token) {
-    // var token = "ev7ZT5nDkW8:APA91bFuxC-XrAjrOBAe-VUmV97nK6NNmhPF3uCWr2iOvWSMS8BBrjaKOfB_27Po10OlC6R5lWnDNK4RRMdnjMKvwf2neKZ2pGZOb8srhjhz0CjkiqLQ-BF3a8FbkUd_uyCvaHu5ESVn";
-    console.log("sendNotification" + _token);
     var message = {
         to: _token,
         notification: {
@@ -93,8 +86,6 @@ function sendNotification(_i, response, _token) {
             // }
         }
     });
-
-
 }
 
 app.post("/save_token", (request, response) => {
@@ -103,7 +94,6 @@ app.post("/save_token", (request, response) => {
         if (exists) {
             fs.readFile('tokenjsonfile.json', function readFileCallback(err, data) {
                 if (err) {
-                    console.log(err);
                     response.status(401);
                     return response.send({ "statuscode": 401, "status": "error to save token" });
                 } else {
@@ -112,7 +102,6 @@ app.post("/save_token", (request, response) => {
                     var json = JSON.stringify(obj);
                     fs.writeFile('tokenjsonfile.json', json, 'utf8', function (e, r) {
                         if (e) {
-                            console.log(e);
                             response.status(401);
                             return response.send({
                                 "statuscode": 401, "status": "error to save token"
@@ -128,7 +117,6 @@ app.post("/save_token", (request, response) => {
             var json = JSON.stringify(obj);
             fs.writeFile('tokenjsonfile.json', json, 'utf8', function (e, r) {
                 if (e) {
-                    console.log(e);
                     response.status(401);
                     return response.send({ "statuscode": 401, "status": "error to save token" });
                 }
@@ -137,7 +125,6 @@ app.post("/save_token", (request, response) => {
             });
         }
     });
-
 });
 
 var server = app.listen(3000, function () {

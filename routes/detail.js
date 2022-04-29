@@ -2,7 +2,6 @@ var ProductDetail = require('../models/productDetail').ProductDetail;
 var ProductType = require('../models/productType').ProductType;
 
 var appRouter = function (app) {
-
     app.get('/productDetail', function (req, res) {
         ProductDetail.getAll(function (error, result) {
             if (error) {
@@ -45,7 +44,6 @@ var appRouter = function (app) {
             });
         });
     });
-
 }
 
 module.exports = appRouter;

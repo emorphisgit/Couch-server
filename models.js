@@ -4,9 +4,7 @@ var bucket = require('./app').bucket;
 
 function PersonModel() { }
 
-
 PersonModel.getAll = function (callback) {
-    console.log('fffffff' + bucket._name);
     var statement = "SELECT " +
         "META(person).id, person.name, person.email, " +
         "(SELECT timestamp, message FROM `" + bucket._name + "` USE KEYS person.comments) AS comments " +
@@ -67,7 +65,6 @@ CommentModel.create = function (data, callback) {
         callback(null, comment);
     })
 }
-
 
 module.exports.PersonModel = PersonModel;
 module.exports.CommentModel = CommentModel;
